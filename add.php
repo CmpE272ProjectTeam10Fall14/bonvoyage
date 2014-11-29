@@ -19,6 +19,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false">
+    </script>
+
     <title>Add Travel Story</title>
 </head>
 
@@ -30,6 +34,8 @@ $uptypes=array('image/bmp','image/jpg','image/png','image/jpeg','image/bmp');
 $imgpreview=1;
 $imgpreviewsize=1;
 ?>
+
+
 
 <script type="text/javascript" language="javascript">
     function checkPost(){
@@ -56,6 +62,24 @@ $imgpreviewsize=1;
     <div  id = "profile_header">
         <?php include('profile_header.php'); ?>
     </div>
+    <div align="center">
+        <li>
+            <a href="add.php">
+                <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add Pin</button>
+            </a>
+        </li>
+    </div>
+    <div>
+        <br>
+    </div>
+    <div align="center">
+        <li>
+            <a href="add_board.php">
+                <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add Board</button>
+            </a>
+        </li>
+    </div>
+
 </div>
 
 <div class="col-lg-1">
@@ -183,7 +207,7 @@ $imgpreviewsize=1;
 
 </script>
 
-        <button class="btn btn-warning btn-lg btn-block active" type="submit" name="submit" value="Submit">Submit</button>
+        <button class="btn btn-primary btn-lg btn-block active" type="submit" name="submit" value="Submit">Submit</button>
 </form>
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
@@ -232,6 +256,57 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     $cost=$_POST['cost'];
     $title=$_POST['title'];
     $place="";
+
+    function getGps($exifCoord, $hemi) {
+
+        $degrees = count($exifCoord) > 0 ? gps2Num($exifCoord[0]) : 0;
+        $minutes = count($exifCoord) > 1 ? gps2Num($exifCoord[1]) : 0;
+        $seconds = count($exifCoord) > 2 ? gps2Num($exifCoord[2]) : 0;
+
+        $flip = ($hemi == 'W' or $hemi == 'S') ? -1 : 1;
+
+        return $flip * ($degrees + $minutes / 60 + $seconds / 3600);
+
+    }
+
+    function gps2Num($coordPart) {
+
+        $parts = explode('/', $coordPart);
+
+        if (count($parts) <= 0)
+            return 0;
+
+        if (count($parts) == 1)
+            return $parts[0];
+
+        return floatval($parts[0]) / floatval($parts[1]);
+    }
+
+
+    $pinfo=pathinfo($destination);
+    $filename = "./pins/".$fname;
+    $exif = exif_read_data($filename);
+    $long = getGps($exif["GPSLongitude"], $exif['GPSLongitudeRef']);
+    echo $long;
+    $lat = getGps($exif["GPSLatitude"], $exif['GPSLatitudeRef']);
+    echo $lat;
+
+    function geo2address($lat,$long) {
+        $url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$long&sensor=false";
+        $curlData=file_get_contents($url);
+        $address = json_decode($curlData);
+        $a=$address->results[0];
+        return explode(",",$a->formatted_address);
+    }
+
+    $address=geo2address($lat,$long);
+
+    $arrlength = count($address);
+
+    for($x = $arrlength - 1 ; $x > 0; $x--) {
+        echo $address[$x].',';
+    }
+
     $sql="insert into pin (pin_id,user_id,board_id,image_name,description,title,cost,place,pin_time) values (NULL,'".$user_id."','".$board."','".$fname."','".$description."','".$title."','".$cost."','".$place."',now())";
     mysql_query($sql) or die("Insert error!!");
 
@@ -243,7 +318,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     }*/
     ?>
     <script type="text/javascript" language="javascript">
-        location.href="index.php";
+        //location.href="main.php";
     </script>
 
 <?php

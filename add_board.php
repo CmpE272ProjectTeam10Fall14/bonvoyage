@@ -57,12 +57,35 @@ function checkPost(){
                     <div  id = "profile_header">
                         <?php include('profile_header.php'); ?>
                     </div>
+
+                    <div align="center">
+                        <li>
+                            <a href="add.php">
+                                <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add Pin</button>
+                            </a>
+                        </li>
+                    </div>
+                    <div>
+                        <br>
+                    </div>
+                    <div align="center">
+                        <li>
+                            <a href="add_board.php">
+                                <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add Board</button>
+                            </a>
+                        </li>
+                    </div>
+
+                    <div>
+                        <br>
+                    </div>
+
                 </div>
 
                 <div class="col-lg-1">
                 </div>
 
-                <div class="col-lg-9">
+                <div class="col-lg-4">
 
                     <h3>Add a new board</h3>
                     <form action="add_board.php" method="post" onsubmit="return checkPost()" name="add_form">
@@ -81,7 +104,7 @@ function checkPost(){
                             </select>
                         </p>
                         <p>
-                            <button class="btn btn-warning btn-lg btn-block active" type="submit" name="submit" value="Submit">Add</button>
+                            <button class="btn btn-primary btn-lg btn-block active" type="submit" name="submit" value="Submit">Add</button>
                         </p>
                     </form>
             	</div>

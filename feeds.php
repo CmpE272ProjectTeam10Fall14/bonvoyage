@@ -1,11 +1,9 @@
 <div id="pin_dinplay" class="pin">
     <ul>
-        <!--<li id="recent">
-            <h3>Recent Activity</h3>
-        </li>-->
         <?php
+        $current_user_id = $_SESSION['user'][0];
 
-        $PIN_SQL="SELECT * FROM `pin` order by pin_id desc";
+        $PIN_SQL="SELECT * FROM `pin` where user_id != '$current_user_id' order by pin_id desc";
         $pin_query=mysql_query($PIN_SQL);
         while($pin_row=mysql_fetch_array($pin_query)){
             $pin_id = $pin_row['pin_id'];
@@ -42,14 +40,14 @@
                     if($if_like) {
                         ?>
 
-                        <a id="<?php echo $like_button; ?>" class="like_button" href="javascript:void(0);" onclick="add_like(<?php echo $pin_row['pin_id']; ?>)">Like</a>
+                        <a id="<?php echo $like_button; ?>" class="like_button" href="javascript:void(0);" onclick="add_like(<?php echo $pin_row['pin_id']; ?>)"><span class="glyphicon glyphicon-thumbs-up"></span></a>
 
                     <?php
                     }
                     else {
                         ?>
 
-                        <a id="<?php echo $unlike_button; ?>" class="unlike_button" href="javascript:void(0);" onclick="delete_like(<?php echo $pin_row['pin_id']; ?>)">Unlike</a>
+                        <a id="<?php echo $unlike_button; ?>" class="unlike_button" href="javascript:void(0);" onclick="delete_like(<?php echo $pin_row['pin_id']; ?>)"><span class="glyphicon glyphicon-thumbs-down"></span></a>
                     <?php
                     }
                     if($_SESSION['user'][0] == $pin_user_id) {
@@ -60,7 +58,7 @@
                 ?>
                <!--<a href="./pins/<?php echo $pin_row['image_name']; ?>"><img src="./pins/<?php echo $pin_row['image_name'];?>"/></a>-->
                 <?php $pin=$pin_row['pin_id'];?>
-                <a href="display.php?pin_id=<?php echo $pin;?>"><img src="./pins/<?php echo $pin_row['image_name'];?>"</a>
+                <a href="predict.php?pin_id=<?php echo $pin;?>"><img src="./pins/<?php echo $pin_row['image_name'];?>"</a>
                 <p class="pin_text"><?php echo $pin_row['description']; ?></p></a>
 
                 <?php
@@ -110,20 +108,15 @@
                             <textarea rows="1" name="comment_text"></textarea>
                             <input type="submit" name="comment_submit" id="comment_button" value="comment" />
                         </form>
-
-
                     <?php
                     }
                     }
                     ?>
-
                 </div>
-
             </li>
 
         <?php
         }
         ?>
-
     </ul>
 </div>

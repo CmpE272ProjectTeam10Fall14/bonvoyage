@@ -9,17 +9,23 @@
     <link href="./css/profile.css" type="text/css" rel="stylesheet" />
 
     <script src="js/jquery-1.6.js" type="text/javascript" language="javascript"></script>
-    <script src="js/jquery.masonry.min.js.js" type="text/javascript" language="javascript"></script>
+    <script src="js/jquery.min.js" type="text/javascript" language="javascript"></script>
+    <script src="js/jquery.masonry.min.js" type="text/javascript" language="javascript"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript" language="javascript"></script>
     <script type="text/javascript" src="js/jquery.shadow.js"></script>
     <script type="text/javascript" src="js/jquery.ifixpng.js"></script>
     <script type="text/javascript" src="js/jquery.fancyzoom.js"></script>
     <script src="js/js-image-slider.js" type="text/javascript"></script>
     <script src="js/respond.js"></script>
 
-    <title>bonVoyage</title>
+     <title>bonVoyage</title>
 
 </head>
 <body>
+<?php
+//error_reporting(0);
+
+?>
 
 <script type="text/javascript" language="javascript">
     function add_like(get_pin_id) {
@@ -35,7 +41,7 @@
         xmlhttp.open("GET","add_like.php?like_id="+get_pin_id,false);
         xmlhttp.send();
 
-        location.href="index.php";
+        location.href="main.php";
     }
 
     function delete_like(get_pin_id) {
@@ -50,7 +56,7 @@
 
         xmlhttp.open("GET","delete_like.php?delete_id="+get_pin_id,false);
         xmlhttp.send();
-        location.href="index.php";
+        location.href="main.php";
     }
 
     function delete_pin(get_pin_id) {
@@ -64,7 +70,8 @@
 
         xmlhttp.open("GET","delete_pin.php?delete_id="+get_pin_id,false);
         xmlhttp.send();
-        location.href="index.php";
+        //location.href="main.php";
+        location.href="main.php";
     }
 
     function button_appear(pin_id) {
@@ -108,13 +115,12 @@
 
             $sql="insert into comment (comment_id, pin_id, user_id, content, comment_time) values (null,'".$comment_pin_id."','".$current_user_id."','".$comment_text."',now())";
             mysql_query($sql) or die("Comment error!");
-            Header("Location:index.php");
+            Header("Location:main.php");
         }
         ?>
-
-
     <div id="main">
 <!--
+
             <div id="nav">
             	<ul>
     <?php
@@ -213,10 +219,8 @@ else {
 						return false;
 					}
 				}
-
 				</script>
-
-            -->
+                -->
     <div id="content">
     <?php if(isset($_SESSION['user'][0])) {?>
 
@@ -225,8 +229,28 @@ else {
                 <?php include('profile_header.php'); ?>
             </div>
             <div align="center">
-                <li ><a href="add.php">Add A Pin + </a></li>
+                <li>
+                    <a href="add.php">
+                        <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add Pin</button>
+                    </a>
+                </li>
             </div>
+            <div>
+                <br>
+            </div>
+            <div align="center">
+                <li>
+                    <a href="add_board.php">
+                        <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add Board</button>
+                    </a>
+                </li>
+            </div>
+
+            <div>
+                <br>
+            </div>
+
+
         </div>
 
         <div class="col-lg-1">
@@ -239,6 +263,9 @@ else {
                 <li><a href="#feeds" data-toggle="tab"><span class="glyphicon glyphicon-refresh"></span>Feeds</a></li>
                 <li><a href="#suggestedTrips" data-toggle="tab"><span class="glyphicon glyphicon-star"></span>Suggested Trips</a></li>
                 <li><a href="#search" data-toggle="tab"><span class="glyphicon glyphicon-search"></span>Find a Trip</a></li>
+                <li><a href="#stats" data-toggle="tab"><span class="glyphicon glyphicon-signal"></span>Stats</a></li>
+
+
             </ul>
 
             <div class="tab-content">
@@ -246,25 +273,28 @@ else {
                     <?php include('settings.php'); ?>
                 </div>
 
-                <!-- Checkups -->
-                <div class="tab-pane fade" id="publish">
-                    <a href="add.php"><img src="image/publish.JPG" /></a>
-                    <?php include('feeds.php'); ?>
-                </div>
-
-                <!-- Senior Pets -->
                 <div class="tab-pane fade active in " id="feeds">
                     <?php include('feeds.php'); ?>
                 </div>
 
                 <div class="tab-pane fade" id="suggestedTrips">
-                    <?php include('feeds.php'); ?>
+                    <?php include('suggested.php'); ?>
                 </div>
+
                 <div class="tab-pane fade" id="search">
-                    <?php include('feeds.php'); ?>
+                    <?php include('find.php'); ?>
+                </div>
+
+                <div class="tab-pane fade" id="publish">
+                    <!--<a href="add.php"><img src="image/publish.JPG" /></a>-->
+                    <?php include('published.php'); ?>
+                </div>
+
+                <div class="tab-pane fade" id="stats">
+                    <!--<a href="add.php"><img src="image/publish.JPG" /></a>-->
+                    <?php include('chart.php'); ?>
                 </div>
             </div>
-
     </header>
 
 
@@ -336,7 +366,6 @@ else {
             columnWidth : 240
         });
     });
-
 </script>
 </body>
 </html>

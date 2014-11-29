@@ -19,7 +19,13 @@
    	<script src="js/js-image-slider.js" type="text/javascript"></script>
 	<title>Register</title>
 	</head>
+<style>
+    .glyphicon-home{font-size:3em;}
+    .glyphicon-log-out{font-size:3em;}
+    .glyphicon-log-in{font-size:3em;}
+    .glyphicon-font{font-size:3em;}
 
+</style>
 <body>
 
 <?php include("conn.php"); ?>
@@ -37,10 +43,10 @@
 		$user_name=$_POST['user_name'];
 		$first_name=$_POST['first_name'];
 		$last_name=$_POST['last_name'];
-		$gender=$_POST['gender'];
 		$password=md5($_POST['password']);
-		$about=$_POST['about'];
-		
+        $gender=$_POST['gender'];
+        $about=$_POST['about'];
+
 		$get_name="select * from user where email='$_POST[email]'";
 		$srch=mysql_query($get_name) or die("Search error!");
 		
@@ -94,7 +100,7 @@
 			$pinfo=pathinfo($destination);
 			$fname=$pinfo['basename'];
 			
-			$sql="insert into user (user_id,email,user_name,first_name,last_name,password,about,gender,head_pic) values (null,'".$email."','".$user_name."','".$first_name."','".$last_name."','".$password."','".$about."','".$gender."','".$fname."')";
+			$sql="insert into user (user_id,email,user_name,first_name,last_name,password,head_pic,about,gender) values (null,'".$email."','".$user_name."','".$first_name."','".$last_name."','".$password."','".$fname."','".$about."','".$gender."')";
 			mysql_query($sql) or die("Register error!!");
 			
 			unset($_SESSION['user']);
@@ -107,7 +113,7 @@
 								mysql_result($query, 0, "email"),
 								mysql_result($query, 0, "first_name"),
 								mysql_result($query, 0, "last_name"),
-								mysql_result($query, 0, "gender")
+                                mysql_result($query, 0, "gender")
 								);
 			$_SESSION['user'] = $user_array;
 ?>
@@ -174,7 +180,7 @@ function checkPost(){
 	}
 	
 	if(register_form.head_pic.value==""){
-		alert("Head Portrait can not be empty!");
+		alert("Head Portrait cannot be empty!");
 		return false;
 	}
 }
@@ -185,19 +191,18 @@ function checkPost(){
     	<div id="header">
             
     	<div id="header_field">
-  
-	    <div id="menu">
-        <ul>
-        	<li class="sec_menu" id="about_menu">
-            	<a href="about.php" class="myButton">About</a>
-			</li>
-            <li class="sec_menu" id="profile_menu">
-                <a href="login.php" class="myButton">Login</a>
-            </li>
-        </ul>		
-    </div>
-   
-    <div id="logo">
+
+            <div id="menu">
+                <ul>
+                    <li class="sec_menu" id="about_menu">
+                        <a href="about.php"><span class="glyphicon glyphicon-font"></a>
+                    </li>
+                    <li class="sec_menu" id="profile_menu">
+                        <a href="login.php"><span class="glyphicon glyphicon-log-in"></span></a>
+                    </li>
+                </ul>
+            </div>
+      <div id="logo">
         <a href="index.php"><img src="image/brown.jpg" /></a>
     </div>
 	</div>
@@ -210,11 +215,18 @@ function checkPost(){
         	   	<p><input class="form-control input-xs" placeholder="Email" name="email" type="text" /></p>
             	<p><input class="form-control input-xs" placeholder="User Name" name="user_name" type="text" /></p>
 				<p><input class="form-control input-xs" placeholder="Password" name="password" type="password" /></p>
-				<p><input class="form-control input-xs" placeholder="Confirm Password" name="password" type="password" /></p>
+				<p><input class="form-control input-xs" placeholder="Confirm Password" name="confirm_password" type="password" /></p>
 				<p><input class="form-control input-xs" placeholder="First Name" name="first_name" type="text" /></p>
 				<p><input class="form-control input-xs" placeholder="Last Name" name="last_name" type="text" /></p>
-                <p><b>Head Portrait</b><input class="input_file" name="head_pic" type="file"></p>
-            	<p><button class="btn btn-warning btn-lg btn-block active" type="submit" name="submit" value="Register">Register</button>
+                <p><input class="form-control input-xs" placeholder="About" name="about" type="text" /></p>
+                <p><b></b>
+                	<span class="gender_area">
+                        <label><input class="input_radio" id="gender_1" checked="true" type="radio" value="male" name="gender"/>Male</label>
+                        <label><input class="input_radio"  id="gender_2" type="radio" value="female" name="gender"/>Female</label>
+                    </span>
+                </p>
+                <p><b>Profile Picture</b><input class="input_file" name="head_pic" type="file"></p>
+                <p><button class="btn btn-primary btn-lg btn-block active" type="submit" name="submit" value="Register">Register</button>
             		<span class="pull-right"><a href="login.php">User Login</a></span>
             </form>
         

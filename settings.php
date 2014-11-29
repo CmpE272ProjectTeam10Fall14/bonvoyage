@@ -6,7 +6,7 @@
 <link href="./css/bootstrap.min.css" rel="stylesheet">
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Settings - Pinterest</title>
+	<title>User Details</title>
 </head>
 
 <body>

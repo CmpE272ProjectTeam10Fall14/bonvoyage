@@ -130,35 +130,54 @@ function button_disappear(pin_id) {
         <?php
 			}
 		?>
-        
-        <div id="main">
-            <div class="col-lg-2">
 
-                <div id="profile_header">
+
+        <div id="content">
+            <div class="col-lg-2">
+                <div  id = "profile_header">
                     <?php include('profile_header.php'); ?>
                 </div>
-             </div>
 
-            <div class="col-lg-10">
-                <div id="page_menu">
-                    <div class="page_menu_body">
-                        <ul class="user_link">
-                            <li><a href="boards.php?user_id=<?php echo $curr_user_id; ?>">Boards</a></li>
-                            <li><a class="current_page" href="pins.php?user_id=<?php echo $curr_user_id; ?>">Pins</a></li>
-                            <li><a href="likes.php?user_id=<?php echo $curr_user_id; ?>">Likes</a></li>
-                        </ul>
-                    </div>
-            	</div>
+                <div align="center">
+                    <li>
+                        <a href="add.php">
+                            <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add Pin</button>
+                        </a>
+                    </li>
+                </div>
+
+                <div>
+                    <br>
+                </div>
+
+                <div align="center">
+                    <li>
+                        <a href="add_board.php">
+                            <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add Board</button>
+                        </a>
+                    </li>
+                </div>
+
+                <div>
+                    <br>
+                </div>
             </div>
-            
-            <div id="content">
-                 
+
+            <div class="col-lg-1">
+            </div>
+
+
+            <div class="col-lg-9">
                 <div id="pin_dinplay" class="pin">
+
+
                     <ul>
-                        <!--<li id="recent">
-                        	<h3>Recent Activity</h3>
-                        </li>-->
-                        <?php
+
+                    </ul>
+
+            <ul>
+
+                <?php
 							
             				$PIN_SQL="SELECT * FROM `pin` where user_id = '$curr_user_id' order by pin_id desc";
   							$pin_query=mysql_query($PIN_SQL);
@@ -199,19 +218,19 @@ function button_disappear(pin_id) {
 								if($if_like) {
 						?>
                         
-									<a id="<?php echo $like_button; ?>" class="like_button" href="javascript:void(0);" onclick="add_like(<?php echo $pin_row['pin_id']; ?>)">Like</a>
+									<a id="<?php echo $like_button; ?>" class="like_button" href="javascript:void(0);" onclick="add_like(<?php echo $pin_row['pin_id']; ?>)"><span class="glyphicon glyphicon-thumbs-up"></a>
                        
                         <?php
 								}
 								else {    
                         ?>
                         
-                            <a id="<?php echo $unlike_button; ?>" class="unlike_button" href="javascript:void(0);" onclick="delete_like(<?php echo $pin_row['pin_id']; ?>)">Unlike</a>
+                            <a id="<?php echo $unlike_button; ?>" class="unlike_button" href="javascript:void(0);" onclick="delete_like(<?php echo $pin_row['pin_id']; ?>)"><span class="glyphicon glyphicon-thumbs-down"></a>
                         <?php
 								}
 								if($_SESSION['user'][0] == $pin_user_id) {
 						?>
-                            <a id="<?php echo $delete_button; ?>" class="delete_button" href="javascript:void(0);" onclick="delete_pin(<?php echo $pin_row['pin_id']; ?>)">Delete</a>
+                            <a id="<?php echo $delete_button; ?>" class="delete_button" href="javascript:void(0);" onclick="delete_pin(<?php echo $pin_row['pin_id']; ?>)"><span class="glyphicon glyphicon-remove"></a>
 						<?php 	} 
 							}
 						?>

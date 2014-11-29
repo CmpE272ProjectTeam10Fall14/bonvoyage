@@ -52,10 +52,8 @@ function delete_follow(get_user_id) {
 	$name=$_SESSION['user'][1];
 	$describe=$_SESSION['user'][2];
 }
-	
 ?>
-            <img class="head_pic" src="./head_pics/<?php  echo $pic; ?>" />    
-            
+            <img class="head_pic" src="./head_pics/<?php  echo $pic; ?>" />                
             <div class="head_info">
                 <h3 class="user_name"><?php echo $name; ?></h3>
                 <h5 class="describe"><?php echo $describe; ?></h5>
@@ -68,25 +66,9 @@ function delete_follow(get_user_id) {
 						$JUDGE_FOLLOW_SQL = "select * from follow where following_user_id = '$login_user_id' and followed_user_id = '$p_curr_user_id'";
 						$judge_follow_query = mysql_query($JUDGE_FOLLOW_SQL);
 						$judge_follow_row = mysql_fetch_array($judge_follow_query);
-						if(empty($judge_follow_row)) {
-            ?>
-                	
-                			<a href="javascript:void(0);" id="not_follow_button" class="follow_button" onclick="add_follow(<?php echo $p_curr_user_id; ?>)">Follow</a>
-                    
-            <?php
-						}
-						else {
-			?>
-            
-            				<a href="javascript:void(0);" id="already_follow_button" class="follow_button" onclick="delete_follow(<?php echo $p_curr_user_id; ?>)">Unfollow</a>
-            
-            <?php
-						}
                 	}
 				}
             ?>
-            
         </div>
-        
     </div>
 </div>

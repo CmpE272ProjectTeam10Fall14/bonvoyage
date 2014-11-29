@@ -17,21 +17,14 @@
     <script type="text/javascript" src="js/jquery.fancyzoom.js"></script>
     <script src="js/js-image-slider.js" type="text/javascript"></script>
     <script src="js/respond.js"></script>
-
-
-    <title>Display - BonVoyage</title>
-
-
+   <title>Display - BonVoyage</title>
     <script
         src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false">
     </script>
-
-
 </head>
 <body>
 
 <div id="wrapper">
-
     <div id="header">
         <?php include('header.php'); ?>
     </div>
@@ -44,7 +37,6 @@
 
     <div id="pin_dinplay" class="pin">
         <?php
-
         $PIN_SQL="SELECT * FROM `pin` where pin_id='$pin_id' ";
         $pin_query=mysql_query($PIN_SQL);
         $pin_row=mysql_fetch_array($pin_query);
@@ -67,15 +59,14 @@
                 <div class="col-lg-1">
                 </div>
 
-                <div class="col-lg-9">
+                <div class="col-lg-5">
 
                     <div>
                         <img src="./pins/<?php echo $pin_row['image_name'];?>"
-                        class="img-rounded" height="450" width="900"/>
+                        class="img-rounded" height="250" width="300"/>
                     </div>
-
-                    <br>
-
+                </div>
+                <div class="col-lg-4">
                     <p><b>Overview</b>
                     <div class=”form-group″>
                         <textarea class="form-control" id="description" name="description" disabled = "true"><?php echo $pin_row['description']; ?></textarea>
@@ -97,8 +88,9 @@
 
         $exif = exif_read_data($filename);
         $lon = getGps($exif["GPSLongitude"], $exif['GPSLongitudeRef']);
+        echo $lon;
         $lat = getGps($exif["GPSLatitude"], $exif['GPSLatitudeRef']);
-
+        echo $lat;
         function getGps($exifCoord, $hemi) {
 
             $degrees = count($exifCoord) > 0 ? gps2Num($exifCoord[0]) : 0;
@@ -141,6 +133,12 @@
         echo $address[$x].',';
 
         }?>
+                            $arrlength = count($address);
+
+                            for($x = 0; $x < $arrlength; $x++) {
+                            echo $address[$x].',';
+
+                            }?>
                         </textarea>
                     </div>
                     </p>
@@ -158,7 +156,7 @@
                 var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
 
                 var marker=new google.maps.Marker({
-                    position:myCenter,
+                    position:myCenter
                 });
 
                 marker.setMap(map);
@@ -166,15 +164,12 @@
 
             google.maps.event.addDomListener(window, 'load', initialize);
         </script>
-
-                    <div id="googleMap" style="width:850px;height:450px;"></div>
+             <div id="googleMap" style="width:850px;height:450px;"></div>
 
                     <br>
                     <br>
     </div>
         </div>
     </div>
-
-
 </body>
 </html>

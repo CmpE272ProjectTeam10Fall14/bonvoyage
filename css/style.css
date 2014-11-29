@@ -58,7 +58,7 @@ body {
 	float:left;
 	width:100%;
 	height:70px;
-	background:#49311c;
+	background:#428bca;
 	border-bottom:#CCCCCC solid 1px;
 	padding-top: 8px;
 }
@@ -462,7 +462,7 @@ body {
 #pin_dinplay ul .small_pin img {
 	width:200px;
 	margin:10px;
-	height:auto;
+	height:150px;
 }
 
 #pin_dinplay ul .small_pin .pin_text {

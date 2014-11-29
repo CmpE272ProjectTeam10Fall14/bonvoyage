@@ -1,4 +1,20 @@
-<?php include("conn.php");?>
+<?php
+//error_reporting(0);
+?>
+<?php include("conn.php");
+if(isset($_GET['loginhandle']))
+{
+
+    $_SESSION['user'][0] = 5;
+    $current_user_id =  5;
+    $twitterid=5;
+}
+else
+{
+
+    $twitterid=0;
+}
+?>
 <?php
 if(isset($_GET['action'])&&$_GET['action']=="logout"){
     unset($_SESSION['user']);
@@ -14,6 +30,13 @@ if(isset($_GET['action'])&&$_GET['action']=="logout"){
         window.location.href = "search.php?text=" + search_text;
     }
 </script>
+<style>
+    .glyphicon-home{font-size:3em;}
+    .glyphicon-log-out{font-size:3em;}
+    .glyphicon-log-in{font-size:3em;}
+    .glyphicon-font{font-size:3em;}
+
+</style>
 
 <div id="header_field">
 
@@ -22,16 +45,16 @@ if(isset($_GET['action'])&&$_GET['action']=="logout"){
             <?php
             if(!isset($_SESSION['user'][0])){
                 ?>
-            <li class="sec_menu" id="about_menu">
-                <a href="about.php" class="myButton">About</a>
+            <li id="about_menu">
+               <a href="about.php"><span class="glyphicon glyphicon-font"></span></a>
             </li>
 
             <?php
             }
             else{
                 ?>
-            <li class="sec_menu" id="about_menu">
-                <a href="main.php" class="myButton">Home</a>
+            <li  id="home">
+                <a href="main.php"><span class="glyphicon glyphicon-home"></span></a>
             </li>
 
         <!-- <li><a href="add.php" class="myButton">My Stories</a></li>
@@ -42,18 +65,18 @@ if(isset($_GET['action'])&&$_GET['action']=="logout"){
             ?>
 
 
-            <li class="sec_menu" id="profile_menu">
+            <li  id="log">
                 <?php
                 if(!isset($_SESSION['user'][0])){
                     ?>
 
-                    <a href="login.php" class="myButton">Login</a>
+                    <a href="login.php"><span class="glyphicon glyphicon-log-in"></span></a>
 
                 <?php
                 }
                 else{
                     ?>
-                    <a href="index.php?action=logout" class="myButton">Logout</a>
+                    <a href="index.php?action=logout"><span class="glyphicon glyphicon-log-out"></span></a>
 
                 <!--    <a href="pins.php" class="myButton">
                     <span class="head_pic_menu">
