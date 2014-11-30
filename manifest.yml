@@ -4,5 +4,4 @@ applications:
 memory: 1024M
 instances: 1
 host: tripshare
-buildpack: https://github.com/cloudfoundry/php-buildpack.git
-
+buildpack: https://github.com/dmikusa-pivotal/cf-php-build-pack.git
