@@ -1,6 +1,7 @@
-  host: tripshare
-  disk: 1024M
-  name: tripshare
-  domain: mybluemix.net
-  memory: 1024M
-  instances: 1
+---
+applications:
+- name: tripshare
+memory: 1024M
+instances: 1
+host: tripshare
+buildpack: https://github.com/dmikusa-pivotal/cf-php-build-pack.git
