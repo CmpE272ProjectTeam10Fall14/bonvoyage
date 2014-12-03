@@ -19,14 +19,11 @@
    	<script src="js/js-image-slider.js" type="text/javascript"></script>
 	<title>Register</title>
 	</head>
-<style>
-    .glyphicon-home{font-size:3em;}
-    .glyphicon-log-out{font-size:3em;}
-    .glyphicon-log-in{font-size:3em;}
-    .glyphicon-font{font-size:3em;}
 
-</style>
 <body>
+<?php
+error_reporting(0);
+?>
 
 <?php include("conn.php"); ?>
 
@@ -119,7 +116,7 @@
 ?>
 
 <script type="text/javascript" language="javascript">
-			location.href="index.php";
+			location.href="main.php";
 </script>
 
 <?php
@@ -195,10 +192,10 @@ function checkPost(){
             <div id="menu">
                 <ul>
                     <li class="sec_menu" id="about_menu">
-                        <a href="about.php"><span class="glyphicon glyphicon-font"></a>
+                        <a href="about.php">About</a>
                     </li>
                     <li class="sec_menu" id="profile_menu">
-                        <a href="login.php"><span class="glyphicon glyphicon-log-in"></span></a>
+                        <a href="login.php">Login</span></a>
                     </li>
                 </ul>
             </div>
@@ -210,6 +207,8 @@ function checkPost(){
   
 
     	<div id="register" class="logreg">
+            <br>
+            <br>
         	<form enctype="multipart/form-data" action="register.php" id="register_form" method="post" onsubmit="return checkPost()" name="register_form">
    	        	<h2 align="center">Create new account</h2>
         	   	<p><input class="form-control input-xs" placeholder="Email" name="email" type="text" /></p>
@@ -219,13 +218,13 @@ function checkPost(){
 				<p><input class="form-control input-xs" placeholder="First Name" name="first_name" type="text" /></p>
 				<p><input class="form-control input-xs" placeholder="Last Name" name="last_name" type="text" /></p>
                 <p><input class="form-control input-xs" placeholder="About" name="about" type="text" /></p>
-                <p><b></b>
-                	<span class="gender_area">
+                <p><b>Profile Picture</b><input class="input_file" name="head_pic" type="file"></p>
+                <p><b>Gender</b>
+                    <span>
                         <label><input class="input_radio" id="gender_1" checked="true" type="radio" value="male" name="gender"/>Male</label>
                         <label><input class="input_radio"  id="gender_2" type="radio" value="female" name="gender"/>Female</label>
                     </span>
                 </p>
-                <p><b>Profile Picture</b><input class="input_file" name="head_pic" type="file"></p>
                 <p><button class="btn btn-primary btn-lg btn-block active" type="submit" name="submit" value="Register">Register</button>
             		<span class="pull-right"><a href="login.php">User Login</a></span>
             </form>

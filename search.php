@@ -10,8 +10,33 @@
 
 <script type="text/javascript" src="js/jquery.fancyzoom.js"></script>
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Pinterest</title>
+    <link href="./css/style.css" type="text/css" rel="stylesheet" />
+    <link href="./css/profile.css" type="text/css" rel="stylesheet" />
+    <script src="js/jquery-1.6.js" type="text/javascript" language="javascript"></script>
+    <script src="js/jquery.masonry.min.js.js" type="text/javascript" language="javascript"></script>
+
+    <script type="text/javascript" src="js/jquery.shadow.js"></script>
+    <script type="text/javascript" src="js/jquery.ifixpng.js"></script>
+
+    <script type="text/javascript" src="js/jquery.fancyzoom.js"></script>
+    <link href="js/js-image-slider.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="./css/craftyslide.css" />
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/style.css" type="text/css" rel="stylesheet" />
+    <link href="./css/profile.css" type="text/css" rel="stylesheet" />
+
+    <script src="js/jquery-1.6.js" type="text/javascript" language="javascript"></script>
+    <script src="js/jquery.min.js" type="text/javascript" language="javascript"></script>
+    <script src="js/jquery.masonry.min.js" type="text/javascript" language="javascript"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript" language="javascript"></script>
+    <script type="text/javascript" src="js/jquery.shadow.js"></script>
+    <script type="text/javascript" src="js/jquery.ifixpng.js"></script>
+    <script type="text/javascript" src="js/jquery.fancyzoom.js"></script>
+    <script src="js/js-image-slider.js" type="text/javascript"></script>
+    <script src="js/respond.js"></script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Search</title>
 </head>
 
 <body>
@@ -89,10 +114,12 @@ function button_disappear(pin_id) {
 }
 </script>
 
-
-
 	<div id="wrapper">
-    	
+        <?php
+        error_reporting(0);
+        ?>
+
+
         <div id="header">
         	<?php include('header.php'); ?>
             
@@ -111,8 +138,7 @@ function button_disappear(pin_id) {
 				Header("Location:index.php");
 			}
 		?>
-        
-        
+
         <div id="main">
         	
             
@@ -124,11 +150,53 @@ function button_disappear(pin_id) {
                         	<h3>Recent Activity</h3>
                         </li>-->
                         <?php
-							$search_text = '';
-							if($_GET['text']) {
-								$search_text = $_GET['text'];
-							}
-            				$PIN_SQL="SELECT * FROM `pin` where description like '%$search_text%'order by pin_id desc";
+                            $current_user_id = $_SESSION['user'][0];
+                            $PIN_SQL="SELECT * FROM `pin` where ";
+
+                            if(isset($_GET['description']))
+                            {
+								$description = $_GET['description'];
+                                $PIN_SQL = $PIN_SQL . " description like '%$description%'";
+                            }
+
+                            if(isset($_GET['category'])) {
+                                $category = $_GET['category'];
+                                if(isset($_GET['description']))
+                                {
+                                    $PIN_SQL = $PIN_SQL . " and category like '%$category%'";
+                                }
+                                else
+                                {
+                                    $PIN_SQL = $PIN_SQL . " category like '%$category%'";
+                                }
+                            }
+
+                            if(isset($_GET['country'])) {
+                                $country = $_GET['country'];
+                                if(isset($_GET['description']) || isset($_GET['category']) )
+                                {
+                                    $PIN_SQL = $PIN_SQL . " and place like '%$country%'";
+                                }
+                                else
+                                {
+                                    $PIN_SQL = $PIN_SQL . " place like '%$country%'";
+                                }
+                            }
+
+                            if(isset($_GET['cost'])) {
+                                $cost= $_GET['cost'];
+                                if(isset($_GET['description']) || isset($_GET['category']) || isset($_GET['country']))
+                                {
+                                    $PIN_SQL = $PIN_SQL . " and cost <= $cost";
+                                }
+                                else
+                                {
+                                    $PIN_SQL = $PIN_SQL . " cost <= $cost";
+                                }
+                            }
+
+                            $PIN_SQL= $PIN_SQL . " order by pin_id desc";
+                            echo $PIN_SQL;
   							$pin_query=mysql_query($PIN_SQL);
   							while($pin_row=mysql_fetch_array($pin_query)){
 								$pin_id = $pin_row['pin_id'];
@@ -167,19 +235,19 @@ function button_disappear(pin_id) {
 								if($if_like) {
 						?>
                         
-									<a id="<?php echo $like_button; ?>" class="like_button" href="javascript:void(0);" onclick="add_like(<?php echo $pin_row['pin_id']; ?>)">Like</a>
+									<a id="<?php echo $like_button; ?>" class="like_button" href="javascript:void(0);" onclick="add_like(<?php echo $pin_row['pin_id']; ?>)"><span class="glyphicon glyphicon-thumbs-up"></span></a>
                        
                         <?php
 								}
 								else {    
                         ?>
                         
-                            <a id="<?php echo $unlike_button; ?>" class="unlike_button" href="javascript:void(0);" onclick="delete_like(<?php echo $pin_row['pin_id']; ?>)">Unlike</a>
+                            <a id="<?php echo $unlike_button; ?>" class="unlike_button" href="javascript:void(0);" onclick="delete_like(<?php echo $pin_row['pin_id']; ?>)"><span class="glyphicon glyphicon-thumbs-down"></span></a>
                         <?php
 								}
 								if($_SESSION['user'][0] == $pin_user_id) {
 						?>
-                            <a id="<?php echo $delete_button; ?>" class="delete_button" href="javascript:void(0);" onclick="delete_pin(<?php echo $pin_row['pin_id']; ?>)">Delete</a>
+                            <a id="<?php echo $delete_button; ?>" class="delete_button" href="javascript:void(0);" onclick="delete_pin(<?php echo $pin_row['pin_id']; ?>)"><span class="glyphicon glyphicon-remove"></span></a>
 						<?php 	} 
 							}
 						?>
@@ -200,43 +268,9 @@ function button_disappear(pin_id) {
                                     <a href="pins.php?user_id=<?php echo $user_row['user_id']; ?>"><img class="user_head" src="./head_pics/<?php echo $user_row['head_pic'];?>" /></a>
                                     <p class="comment_text"> <b><a class="user_name_link" href="pins.php?user_id=<?php echo $user_row['user_id']; ?>"><?php echo $user_row['user_name'];?></a> </b>pin onto <b><a class="user_name_link" href="board_display.php?user_id=<?php echo $pin_user_id; ?>&board_id=<?php echo $cur_board_id;?>"><?php echo $cur_board_name;?></a></b> board</p>
                                 </div>
-                                
-                                <ul class="comment_display">
-                                <?php
-                                	$COMMENT_SQL="SELECT * FROM `comment` where pin_id = '$pin_id' order by comment_id desc";
-  									$comment_query=mysql_query($COMMENT_SQL);
-  									while($comment_row=mysql_fetch_array($comment_query)){	
-								?>
-                                	<li>
-                                    <?php
-										$comment_user_id = $comment_row['user_id'];
-										$comment_content = $comment_row['content'];
-                                    	$COMMENT_USER_SQL="SELECT * FROM `user` where user_id = '$comment_user_id'";
-										$comment_user_query=mysql_query($COMMENT_USER_SQL);
-										while($comment_user_row=mysql_fetch_array($comment_user_query)){
-											$comment_user_pic = $comment_user_row['head_pic'];
-											$comment_user_name = $comment_user_row['user_name'];
-                                    ?>
-									<a href="pins.php?user_id=<?php echo $comment_user_id; ?>"><img class="user_head" src="./head_pics/<?php echo $comment_user_pic; ?>" /></a>
-			       					<p class="comment_text"><b><a class="user_name_link" href="pins.php?user_id=<?php echo $comment_user_id; ?>"><?php echo $comment_user_name; ?></a></b></p>
-                                    <p class="comment_text"><?php echo $comment_content;?></p>             
-                                    </li>
-                                <?php
-										}
-									}
-								?>
-                                </ul>
-                                
-								<?php if(isset($_SESSION['user'][0])){ ?>
-                                        <form id="comment_form" action="index.php" name="comment_form" onsubmit="check_comment()" method="post">
-                                            <img class="user_head" src="./head_pics/<?php echo $_SESSION['user'][3]; ?>" />
-                                            <input type="hidden" value="<?php echo $pin_id; ?>" name="comment_pin_id" />
-                                            <textarea rows="1" name="comment_text"></textarea>
-                                            <input type="submit" name="comment_submit" id="comment_button" value="comment" />
-                                        </form>
-                            
+
                             <?php
-                                    	}
+                                    //	}
 									}
                             ?>
                             

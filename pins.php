@@ -97,6 +97,10 @@ function button_disappear(pin_id) {
 }
 </script>
 <div id="wrapper">
+<?php
+error_reporting(0);
+?>
+
 
         <div id="header">
         	<?php include('header.php'); ?>
@@ -124,7 +128,7 @@ function button_disappear(pin_id) {
 		?>
         
         <script type="text/javascript" language="javascript">
-			window.location.href= "likes.php?id=" + <?php echo $curr_user_id; ?>;
+			//window.location.href= "likes.php?id=" + <?php echo $curr_user_id; ?>;
 		</script>
         
         <?php
@@ -141,7 +145,7 @@ function button_disappear(pin_id) {
                 <div align="center">
                     <li>
                         <a href="add.php">
-                            <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add Pin</button>
+                            <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add pin to the story board</button>
                         </a>
                     </li>
                 </div>
@@ -153,7 +157,7 @@ function button_disappear(pin_id) {
                 <div align="center">
                     <li>
                         <a href="add_board.php">
-                            <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add Board</button>
+                            <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add story board</button>
                         </a>
                     </li>
                 </div>
@@ -279,7 +283,7 @@ function button_disappear(pin_id) {
                                 </ul>
                                 
 								<?php if(isset($_SESSION['user'][0])){ ?>
-                                        <form id="comment_form" action="index.php" name="comment_form" onsubmit="check_comment()" method="post">
+                                        <form id="comment_form" action="#" name="comment_form" onsubmit="check_comment()" method="post">
                                             <img class="user_head" src="./head_pics/<?php echo $_SESSION['user'][3]; ?>" />
                                             <input type="hidden" value="<?php echo $pin_id; ?>" name="comment_pin_id" />
                                             <textarea rows="1" name="comment_text"></textarea>

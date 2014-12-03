@@ -4,7 +4,19 @@
             <h3>Recent Activity</h3>
         </li>-->
         <?php
-        $PIN_SQL="SELECT * FROM `pin` where image_name='$image_name' ";
+        error_reporting(0);
+        ?>
+
+        <?php
+        $current_user_id = $_SESSION['user'][0];
+        $lat1=$lat+2;
+        $lat2=$lat-2;
+
+        $lon1=$lon+2;
+        $lon2=$lon-2;
+
+        $PIN_SQL="SELECT * FROM `pin` where pin_id != '$pin_id' and lat < '$lat1' and lat> '$lat2' and lon < '$lon1' and lon > '$lon2' and user_id != '$current_user_id'";
+        //$PIN_SQL="SELECT * FROM `pin` where ";
         $pin_query=mysql_query($PIN_SQL);
         $pin_row=mysql_fetch_array($pin_query);
         $description = $pin_row['description'];
@@ -13,7 +25,6 @@
         $pin_query=mysql_query($PIN_SQL);
         while($pin_row=mysql_fetch_array($pin_query)){
             $pin_id = $pin_row['pin_id'];
-
             $board_id = $pin_row['board_id'];
             $pin_user_id = $pin_row['user_id'];
             $delete_button = "delete_pin_".$pin_id;
@@ -64,7 +75,7 @@
                 ?>
                <!--<a href="./pins/<?php echo $pin_row['image_name']; ?>"><img src="./pins/<?php echo $pin_row['image_name'];?>"/></a>-->
                 <?php $pin=$pin_row['pin_id'];?>
-                <a href="display.php?pin_id=<?php echo $pin;?>"><img src="./pins/<?php echo $pin_row['image_name'];?>"</a>
+                <a href="predict.php?pin_id=<?php echo $pin;?>"><img src="./pins/<?php echo $pin_row['image_name'];?>"</a>
                 <p class="pin_text"><?php echo $pin_row['description']; ?></p></a>
 
                 <?php
@@ -81,43 +92,9 @@
                         <p class="comment_text"> <b><a class="user_name_link" href="pins.php?user_id=<?php echo $user_row['user_id']; ?>"><?php echo $user_row['user_name'];?></a> </b>pin onto <b><a class="user_name_link" href="board_display.php?user_id=<?php echo $pin_user_id; ?>&board_id=<?php echo $cur_board_id;?>"><?php echo $cur_board_name;?></a></b> board</p>
                     </div>
 
-                    <ul class="comment_display">
-                        <?php
-                        $COMMENT_SQL="SELECT * FROM `comment` where pin_id = '$pin_id' order by comment_id desc";
-                        $comment_query=mysql_query($COMMENT_SQL);
-                        while($comment_row=mysql_fetch_array($comment_query)){
-                            ?>
-                            <li>
-                            <?php
-                            $comment_user_id = $comment_row['user_id'];
-                            $comment_content = $comment_row['content'];
-                            $COMMENT_USER_SQL="SELECT * FROM `user` where user_id = '$comment_user_id'";
-                            $comment_user_query=mysql_query($COMMENT_USER_SQL);
-                            while($comment_user_row=mysql_fetch_array($comment_user_query)){
-                                $comment_user_pic = $comment_user_row['head_pic'];
-                                $comment_user_name = $comment_user_row['user_name'];
-                                ?>
-                                <a href="pins.php?user_id=<?php echo $comment_user_id; ?>"><img class="user_head" src="./head_pics/<?php echo $comment_user_pic; ?>" /></a>
-                                <p class="comment_text"><b><a class="user_name_link" href="pins.php?user_id=<?php echo $comment_user_id; ?>"><?php echo $comment_user_name; ?></a></b></p>
-                                <p class="comment_text"><?php echo $comment_content;?></p>
-                                </li>
-                            <?php
-                            }
-                        }
-                        ?>
-                    </ul>
-
-                    <?php if(isset($_SESSION['user'][0])){ ?>
-                        <form id="comment_form" action="main.php" name="comment_form" onsubmit="check_comment()" method="post">
-                            <img class="user_head" src="./head_pics/<?php echo $_SESSION['user'][3]; ?>" />
-                            <input type="hidden" value="<?php echo $pin_id; ?>" name="comment_pin_id" />
-                            <textarea rows="1" name="comment_text"></textarea>
-                            <input type="submit" name="comment_submit" id="comment_button" value="comment" />
-                        </form>
-
 
                     <?php
-                    }
+             //           }
                     }
                     ?>
 

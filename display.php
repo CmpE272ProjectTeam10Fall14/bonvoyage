@@ -17,13 +17,16 @@
     <script type="text/javascript" src="js/jquery.fancyzoom.js"></script>
     <script src="js/js-image-slider.js" type="text/javascript"></script>
     <script src="js/respond.js"></script>
-   <title>Display - BonVoyage</title>
-    <script
-        src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false">
-    </script>
+    <title>Display</title>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"> </script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+
 </head>
 <body>
 
+<?php
+error_reporting(0);
+?>
 <div id="wrapper">
     <div id="header">
         <?php include('header.php'); ?>
@@ -54,6 +57,7 @@
                     <div  id = "profile_header">
                         <?php include('profile_header.php'); ?>
                     </div>
+
                 </div>
 
                 <div class="col-lg-1">

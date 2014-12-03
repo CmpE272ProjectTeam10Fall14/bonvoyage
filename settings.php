@@ -14,8 +14,9 @@
     <div id="wrapper">
 
  <?php
-	
-	if(isset($_POST['submit_settings'])&&$_POST['submit_settings']){
+        error_reporting(0);
+
+        if(isset($_POST['submit_settings'])&&$_POST['submit_settings']){
 		
 		$user_name=$_POST['user_name'];
 		$first_name=$_POST['first_name'];

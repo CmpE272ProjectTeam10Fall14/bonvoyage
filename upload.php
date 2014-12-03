@@ -44,7 +44,6 @@
                 }
                 ?>
                 <script>
-
                     function displayfiles(){
                         var files = document.getElementById("_file[]").files;
                         var display = "";

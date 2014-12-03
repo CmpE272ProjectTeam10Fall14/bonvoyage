@@ -42,7 +42,9 @@
 
 <body>
 
-<?php include("conn.php"); ?>
+<?php include("conn.php");
+error_reporting(0);
+?>
 
 <?php 
 	if(isset($_GET['action'])&&$_GET['action']=="logout"){
@@ -124,10 +126,10 @@ function checkPost(){
 			    <div id="menu">
 		        <ul>
 		        	<li class="sec_menu" id="about_menu">
-		            	<a href="about.php"><span class="glyphicon glyphicon-font"></a>
+		            	<a href="about.php">About</a>
 					</li>
 		            <li class="sec_menu" id="profile_menu">
-		                <a href="login.php"><span class="glyphicon glyphicon-log-in"></span></a>
+		                <a href="login.php">Login</span></a>
 		            </li>
 		        </ul>
 		    	</div>

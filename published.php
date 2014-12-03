@@ -1,3 +1,7 @@
+<?php
+error_reporting(0);
+?>
+
 <div id="pin_dinplay" class="pin">
     <ul>
         <?php

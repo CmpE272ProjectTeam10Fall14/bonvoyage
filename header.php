@@ -1,17 +1,16 @@
 <?php
-//error_reporting(0);
+error_reporting(0);
 ?>
-<?php include("conn.php");
+<?php
+include("conn.php");
 if(isset($_GET['loginhandle']))
 {
-
     $_SESSION['user'][0] = 5;
     $current_user_id =  5;
     $twitterid=5;
 }
 else
 {
-
     $twitterid=0;
 }
 ?>
@@ -46,7 +45,7 @@ if(isset($_GET['action'])&&$_GET['action']=="logout"){
             if(!isset($_SESSION['user'][0])){
                 ?>
             <li id="about_menu">
-               <a href="about.php"><span class="glyphicon glyphicon-font"></span></a>
+               <a href="about.php">About</span></a>
             </li>
 
             <?php
@@ -54,7 +53,7 @@ if(isset($_GET['action'])&&$_GET['action']=="logout"){
             else{
                 ?>
             <li  id="home">
-                <a href="main.php"><span class="glyphicon glyphicon-home"></span></a>
+                <a href="main.php">Home</span></a>
             </li>
 
         <!-- <li><a href="add.php" class="myButton">My Stories</a></li>
@@ -70,13 +69,13 @@ if(isset($_GET['action'])&&$_GET['action']=="logout"){
                 if(!isset($_SESSION['user'][0])){
                     ?>
 
-                    <a href="login.php"><span class="glyphicon glyphicon-log-in"></span></a>
+                    <a href="login.php">Login</span></a>
 
                 <?php
                 }
                 else{
                     ?>
-                    <a href="index.php?action=logout"><span class="glyphicon glyphicon-log-out"></span></a>
+                    <a href="index.php?action=logout">Logout</span></a>
 
                 <!--    <a href="pins.php" class="myButton">
                     <span class="head_pic_menu">

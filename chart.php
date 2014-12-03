@@ -1,4 +1,6 @@
-
+<?php
+error_reporting(0);
+?>
 <?php
 //require('conn.php');
 $current_user_id =  $_SESSION['user'][0];

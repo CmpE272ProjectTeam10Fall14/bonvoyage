@@ -34,7 +34,12 @@ function delete_follow(get_user_id) {
 <div id="profile_header_field">
 	<div class="profile_header_body">
         <div class="user_info">
-<?php
+
+            <?php
+            error_reporting(0);
+            ?>
+
+            <?php
 	if(isset($_GET['user_id'])){
 	$p_curr_user_id = $_GET['user_id'];
             	
@@ -56,7 +61,6 @@ function delete_follow(get_user_id) {
             <img class="head_pic" src="./head_pics/<?php  echo $pic; ?>" />                
             <div class="head_info">
                 <h3 class="user_name"><?php echo $name; ?></h3>
-                <h5 class="describe"><?php echo $describe; ?></h5>
             </div>
             
 			<?php 

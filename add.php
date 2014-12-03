@@ -23,7 +23,7 @@
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false">
     </script>
 
-    <title>Add Travel Story</title>
+    <title>Add</title>
 </head>
 
 <body>
@@ -47,13 +47,16 @@ $imgpreviewsize=1;
             alert("Please choose a board!");
             return false;
         }
+        alert("Pin added successfully to board !!  ");
     }
 </script>
 
 <div id="wrapper">
 
 <div id="header">
-    <?php include('header.php'); ?>
+    <?php
+    error_reporting(0);
+    include('header.php'); ?>
 </div>
 
 <div id="main">
@@ -65,7 +68,7 @@ $imgpreviewsize=1;
     <div align="center">
         <li>
             <a href="add.php">
-                <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add Pin</button>
+                <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add pin to the story board</button>
             </a>
         </li>
     </div>
@@ -75,7 +78,7 @@ $imgpreviewsize=1;
     <div align="center">
         <li>
             <a href="add_board.php">
-                <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add Board</button>
+                <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add story board</button>
             </a>
         </li>
     </div>
@@ -93,7 +96,9 @@ $imgpreviewsize=1;
 </table>
 
 <table class="table table-hover" >
-    Add your story in the form of pins.
+    <h2 color="blue">
+        Add pin to your story board
+    </h2>
 </table>
     <div class="panel-group" id="accordion">
         <div class="panel panel-default">
@@ -214,7 +219,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     if (!is_uploaded_file($_FILES["upfile"]['tmp_name']))
     {
-        echo "<font color='red'>File Not Exists！</font>";
+        echo "<font color='red'>File does not Exist！</font>";
         exit;
     }
     $file = $_FILES['upfile'];
@@ -287,9 +292,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     $filename = "./pins/".$fname;
     $exif = exif_read_data($filename);
     $long = getGps($exif["GPSLongitude"], $exif['GPSLongitudeRef']);
-    echo $long;
+    //echo $long;
     $lat = getGps($exif["GPSLatitude"], $exif['GPSLatitudeRef']);
-    echo $lat;
+    //echo $lat;
 
     function geo2address($lat,$long) {
         $url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$long&sensor=false";
@@ -300,14 +305,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     }
 
     $address=geo2address($lat,$long);
-
+    //echo $address;
     $arrlength = count($address);
 
+    $add = "";
     for($x = $arrlength - 1 ; $x > 0; $x--) {
-        echo $address[$x].',';
+        $add=$add.$address[$x].',';
     }
 
-    $sql="insert into pin (pin_id,user_id,board_id,image_name,description,title,cost,place,pin_time) values (NULL,'".$user_id."','".$board."','".$fname."','".$description."','".$title."','".$cost."','".$place."',now())";
+    $BOARD_SQL="SELECT * FROM `board` where board_id = '$board'";
+    $board_query=mysql_query($BOARD_SQL);
+    $board_row=mysql_fetch_array($board_query);
+    $cur_board_cat = $board_row['board_cat'];
+    $cur_board_name = $board_row['board_name'];
+
+    $sql="insert into pin (pin_id,user_id,board_id,image_name,description,title,cost,place,pin_time,lat,lon,category) values (NULL,'".$user_id."','".$board."','".$fname."','".$description."','".$title."','".$cost."','".$add."',now(),'".$lat."','".$long."','".$cur_board_cat."')";
+
     mysql_query($sql) or die("Insert error!!");
 
     /*if($imgpreview==1)
@@ -318,7 +331,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     }*/
     ?>
     <script type="text/javascript" language="javascript">
-        //location.href="main.php";
+        alert("Pin inserted to board " + <?php echo $cur_board_name;?> );
+        location.href="main.php#publish";
     </script>
 
 <?php

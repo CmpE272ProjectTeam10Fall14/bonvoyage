@@ -4,4 +4,4 @@ applications:
 memory: 1024M
 instances: 1
 host: tripshare
-buildpack: https://github.com/cloudfoundry/php-buildpack.git 
+buildpack: https://github.com/zendtech/zend-server-php-buildpack.git

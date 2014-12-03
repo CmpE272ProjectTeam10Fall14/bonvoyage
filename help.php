@@ -3,7 +3,7 @@
 <head>
 <link href="./css/style.css" type="text/css" rel="stylesheet" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>About - Pinterest</title>
+	<title>About</title>
 </head>
 
 <body>

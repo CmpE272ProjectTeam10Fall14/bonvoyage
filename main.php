@@ -23,7 +23,7 @@
 </head>
 <body>
 <?php
-//error_reporting(0);
+error_reporting(0);
 
 ?>
 
@@ -231,7 +231,7 @@ else {
             <div align="center">
                 <li>
                     <a href="add.php">
-                        <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add Pin</button>
+                        <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add pin to the story board</button>
                     </a>
                 </li>
             </div>
@@ -241,7 +241,7 @@ else {
             <div align="center">
                 <li>
                     <a href="add_board.php">
-                        <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add Board</button>
+                        <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add story board</button>
                     </a>
                 </li>
             </div>
@@ -273,7 +273,7 @@ else {
                     <?php include('settings.php'); ?>
                 </div>
 
-                <div class="tab-pane fade active in " id="feeds">
+                <div class="tab-pane fade active in" id="feeds">
                     <?php include('feeds.php'); ?>
                 </div>
 

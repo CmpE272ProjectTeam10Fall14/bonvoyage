@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 3.2.0.1
+-- version 4.2.7.1
 -- http://www.phpmyadmin.net
 --
--- 主机: localhost
--- 生成日期: 2013 年 08 月 28 日 15:42
--- Server version: 5.5.8
--- PHP version: 5.3.3
+-- Host: 127.0.0.1
+-- Generation Time: Dec 02, 2014 at 11:29 PM
+-- Server version: 5.6.20
+-- PHP Version: 5.5.15
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -16,161 +17,206 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 --
--- database: `bonVoyage`
+-- Database: `bonvoyage`
 --
 
 -- --------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `user` (
-  `user_id` int(8) NOT NULL AUTO_INCREMENT,
-  `email` varchar(30) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `password` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `user_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `gender` varchar(12) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `first_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `last_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `about` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `head_pic` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  PRIMARY KEY (`user_id`),
-  KEY `name_index` (`user_name`),
-  KEY `email_index` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
 --
--- table `board`
+-- Table structure for table `board`
 --
 
 CREATE TABLE IF NOT EXISTS `board` (
-  `board_id` int(8) NOT NULL AUTO_INCREMENT,
+`board_id` int(8) NOT NULL,
   `user_id` int(8) NOT NULL,
   `board_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `board_cat` varchar(30) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `create_time` datetime NOT NULL,
-  PRIMARY KEY (`board_id`),
-  KEY `user_board_index` (`user_id`),
-  KEY `board_index` (`board_cat`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+  `create_time` datetime NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=30 ;
 
-
+-- --------------------------------------------------------
 
 --
--- table `comment`
+-- Table structure for table `comment`
 --
 
 CREATE TABLE IF NOT EXISTS `comment` (
-  `comment_id` int(8) NOT NULL AUTO_INCREMENT,
+`comment_id` int(8) NOT NULL,
   `pin_id` int(8) NOT NULL,
   `user_id` int(8) NOT NULL,
   `content` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `comment_time` datetime NOT NULL,
-  PRIMARY KEY (`comment_id`),
-  KEY `pin_comment_index` (`pin_id`),
-  KEY `user_comment_index` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+  `comment_time` datetime NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=55 ;
 
-
+-- --------------------------------------------------------
 
 --
--- table `follow`
+-- Table structure for table `follow`
 --
 
 CREATE TABLE IF NOT EXISTS `follow` (
-  `follow_id` int(8) NOT NULL AUTO_INCREMENT,
+`follow_id` int(8) NOT NULL,
   `following_user_id` int(8) NOT NULL,
   `followed_user_id` int(8) NOT NULL,
-  `follow_time` datetime NOT NULL,
-  PRIMARY KEY (`follow_id`),
-  KEY `followed_index` (`followed_user_id`),
-  KEY `following_index` (`following_user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+  `follow_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
-
+-- --------------------------------------------------------
 
 --
--- table `like_pin`
+-- Table structure for table `like_pin`
 --
 
 CREATE TABLE IF NOT EXISTS `like_pin` (
-  `like_id` int(8) NOT NULL AUTO_INCREMENT,
+`like_id` int(8) NOT NULL,
   `user_id` int(8) NOT NULL,
   `pin_id` int(8) NOT NULL,
-  `like_time` datetime NOT NULL,
-  PRIMARY KEY (`like_id`),
-  KEY `like_user_index` (`user_id`),
-  KEY `like_pin_index` (`pin_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=34 ;
+  `like_time` datetime NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
-
+-- --------------------------------------------------------
 
 --
--- table `pin`
+-- Table structure for table `pin`
 --
 
 CREATE TABLE IF NOT EXISTS `pin` (
-  `pin_id` int(8) NOT NULL AUTO_INCREMENT,
+`pin_id` int(8) NOT NULL,
   `user_id` int(8) NOT NULL,
   `image_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `board_id` int(8) DEFAULT NULL,
   `pin_time` datetime NOT NULL,
   `description` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`pin_id`),
-  KEY `pin_delete_key` (`board_id`),
-  KEY `use_board_index` (`user_id`,`board_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
-
-
-
-
-CREATE TABLE IF NOT EXISTS `stories_image` (
-  `story_id` int(8) NOT NULL AUTO_INCREMENT,
-  `image_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-);
-
-CREATE TABLE IF NOT EXISTS `stories` (
-  `story_id` int(8) NOT NULL AUTO_INCREMENT,
-  `user_id` int(8) NOT NULL,
   `title` varchar(50) NOT NULL,
   `cost` int(8) NOT NULL,
-  `tags` varchar(100) NOT NULL,
-  `transport` int(10) NOT NULL,
-  `food` int(10) NOT NULL,
-  `stay` int(10) NOT NULL,
-  `tours` int(10) NOT NULL,
-  `privacy` int(8) NOT NULL,
-  `category` int(8) DEFAULT NULL,
-  `story_time` datetime NOT NULL,
-  `description` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`pin_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
+  `place` varchar(100) NOT NULL,
+  `lat` float(10,6) NOT NULL,
+  `lon` float(10,6) NOT NULL,
+  `category` varchar(30) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
-KEY `pin_delete_key` (`board_id`),
-  KEY `use_board_index` (`user_id`,`board_id`)
---
--- table `user`
---
-
-
+-- --------------------------------------------------------
 
 --
--- 限制表 `board`
+-- Table structure for table `user`
+--
+
+CREATE TABLE IF NOT EXISTS `user` (
+`user_id` int(8) NOT NULL,
+  `email` varchar(30) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `password` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `user_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `first_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `last_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `about` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `head_pic` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `gender` varchar(12) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `board`
 --
 ALTER TABLE `board`
-  ADD CONSTRAINT `board_key` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE;
+ ADD PRIMARY KEY (`board_id`), ADD KEY `user_board_index` (`user_id`), ADD KEY `board_index` (`board_cat`);
 
 --
--- 限制表 `comment`
+-- Indexes for table `comment`
 --
 ALTER TABLE `comment`
-  ADD CONSTRAINT `pin_comment_key` FOREIGN KEY (`pin_id`) REFERENCES `pin` (`pin_id`) ON DELETE CASCADE;
+ ADD PRIMARY KEY (`comment_id`), ADD KEY `pin_comment_index` (`pin_id`), ADD KEY `user_comment_index` (`user_id`);
 
 --
--- 限制表 `like_pin`
+-- Indexes for table `follow`
+--
+ALTER TABLE `follow`
+ ADD PRIMARY KEY (`follow_id`), ADD KEY `followed_index` (`followed_user_id`), ADD KEY `following_index` (`following_user_id`);
+
+--
+-- Indexes for table `like_pin`
 --
 ALTER TABLE `like_pin`
-  ADD CONSTRAINT `like_key` FOREIGN KEY (`pin_id`) REFERENCES `pin` (`pin_id`) ON DELETE CASCADE;
+ ADD PRIMARY KEY (`like_id`), ADD KEY `like_user_index` (`user_id`), ADD KEY `like_pin_index` (`pin_id`);
 
 --
--- 限制表 `pin`
+-- Indexes for table `pin`
 --
 ALTER TABLE `pin`
-  ADD CONSTRAINT `pin_delete_key` FOREIGN KEY (`board_id`) REFERENCES `board` (`board_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `board_pin_key` FOREIGN KEY (`board_id`) REFERENCES `board` (`board_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `pin_key` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE;
+ ADD PRIMARY KEY (`pin_id`), ADD KEY `pin_delete_key` (`board_id`), ADD KEY `use_board_index` (`user_id`,`board_id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+ ADD PRIMARY KEY (`user_id`), ADD KEY `name_index` (`user_name`), ADD KEY `email_index` (`email`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `board`
+--
+ALTER TABLE `board`
+MODIFY `board_id` int(8) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=30;
+--
+-- AUTO_INCREMENT for table `comment`
+--
+ALTER TABLE `comment`
+MODIFY `comment_id` int(8) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=55;
+--
+-- AUTO_INCREMENT for table `follow`
+--
+ALTER TABLE `follow`
+MODIFY `follow_id` int(8) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `like_pin`
+--
+ALTER TABLE `like_pin`
+MODIFY `like_id` int(8) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `pin`
+--
+ALTER TABLE `pin`
+MODIFY `pin_id` int(8) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+MODIFY `user_id` int(8) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `board`
+--
+ALTER TABLE `board`
+ADD CONSTRAINT `board_key` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `comment`
+--
+ALTER TABLE `comment`
+ADD CONSTRAINT `pin_comment_key` FOREIGN KEY (`pin_id`) REFERENCES `pin` (`pin_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `like_pin`
+--
+ALTER TABLE `like_pin`
+ADD CONSTRAINT `like_key` FOREIGN KEY (`pin_id`) REFERENCES `pin` (`pin_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `pin`
+--
+ALTER TABLE `pin`
+ADD CONSTRAINT `board_pin_key` FOREIGN KEY (`board_id`) REFERENCES `board` (`board_id`) ON UPDATE CASCADE,
+ADD CONSTRAINT `pin_delete_key` FOREIGN KEY (`board_id`) REFERENCES `board` (`board_id`) ON DELETE CASCADE,
+ADD CONSTRAINT `pin_key` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -1,3 +1,6 @@
+<?php
+error_reporting(0);
+?>
 <div id="pin_dinplay" class="pin">
     <ul>
         <?php
@@ -52,13 +55,13 @@
                     }
                     if($_SESSION['user'][0] == $pin_user_id) {
                         ?>
-                        <a id="<?php echo $delete_button; ?>" class="delete_button" href="javascript:void(0);" onclick="delete_pin(<?php echo $pin_row['pin_id']; ?>)">Delete</a>
+                        <a id="<?php echo $delete_button; ?>" class="delete_button" href="javascript:void(0);" onclick="delete_pin(<?php echo $pin_row['pin_id']; ?>)"><span class="glyphicon glyphicon-remove"></span></a>
                     <?php 	}
                 }
                 ?>
                <!--<a href="./pins/<?php echo $pin_row['image_name']; ?>"><img src="./pins/<?php echo $pin_row['image_name'];?>"/></a>-->
                 <?php $pin=$pin_row['pin_id'];?>
-                <a href="predict.php?pin_id=<?php echo $pin;?>"><img src="./pins/<?php echo $pin_row['image_name'];?>"</a>
+                <a href="predict.php?pin_id=<?php echo $pin_id;?>"><img src="./pins/<?php echo $pin_row['image_name'];?>"</a>
                 <p class="pin_text"><?php echo $pin_row['description']; ?></p></a>
 
                 <?php

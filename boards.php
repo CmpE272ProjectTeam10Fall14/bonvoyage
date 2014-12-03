@@ -12,7 +12,11 @@
     <div id="wrapper">
     	
        <div id="header">
+           <?php
+           error_reporting(0);
+           ?>
         	<?php include('header.php'); ?>
+
         </div>
 		<?php
 			if(isset($_GET['user_id'])){

@@ -1,5 +1,7 @@
 <?php include("conn.php"); ?>
-
+<?php
+error_reporting(0);
+?>
 <?php
 if(isset($_SESSION['user'][0])){ 
 	$delete_pin_id = $_GET['delete_id'];

@@ -1,3 +1,7 @@
+<?php
+error_reporting(0);
+?>
+
 <div id="pin_dinplay" class="pin">
     <ul>
         <?php
@@ -79,42 +83,8 @@
                         <a href="pins.php?user_id=<?php echo $user_row['user_id']; ?>"><img class="user_head" src="./head_pics/<?php echo $user_row['head_pic'];?>" /></a>
                         <p class="comment_text"> <b><a class="user_name_link" href="pins.php?user_id=<?php echo $user_row['user_id']; ?>"><?php echo $user_row['user_name'];?></a> </b>pin onto <b><a class="user_name_link" href="board_display.php?user_id=<?php echo $pin_user_id; ?>&board_id=<?php echo $cur_board_id;?>"><?php echo $cur_board_name;?></a></b> board</p>
                     </div>
-
-                    <ul class="comment_display">
-                        <?php
-                        $COMMENT_SQL="SELECT * FROM `comment` where pin_id = '$pin_id' order by comment_id desc";
-                        $comment_query=mysql_query($COMMENT_SQL);
-                        while($comment_row=mysql_fetch_array($comment_query)){
-                            ?>
-                            <li>
-                            <?php
-                            $comment_user_id = $comment_row['user_id'];
-                            $comment_content = $comment_row['content'];
-                            $COMMENT_USER_SQL="SELECT * FROM `user` where user_id = '$comment_user_id'";
-                            $comment_user_query=mysql_query($COMMENT_USER_SQL);
-                            while($comment_user_row=mysql_fetch_array($comment_user_query)){
-                                $comment_user_pic = $comment_user_row['head_pic'];
-                                $comment_user_name = $comment_user_row['user_name'];
-                                ?>
-                                <a href="pins.php?user_id=<?php echo $comment_user_id; ?>"><img class="user_head" src="./head_pics/<?php echo $comment_user_pic; ?>" /></a>
-                                <p class="comment_text"><b><a class="user_name_link" href="pins.php?user_id=<?php echo $comment_user_id; ?>"><?php echo $comment_user_name; ?></a></b></p>
-                                <p class="comment_text"><?php echo $comment_content;?></p>
-                                </li>
-                            <?php
-                            }
-                        }
-                        ?>
-                    </ul>
-
-                    <?php if(isset($_SESSION['user'][0])){ ?>
-                        <form id="comment_form" action="main.php" name="comment_form" onsubmit="check_comment()" method="post">
-                            <img class="user_head" src="./head_pics/<?php echo $_SESSION['user'][3]; ?>" />
-                            <input type="hidden" value="<?php echo $pin_id; ?>" name="comment_pin_id" />
-                            <textarea rows="1" name="comment_text"></textarea>
-                            <input type="submit" name="comment_submit" id="comment_button" value="comment" />
-                        </form>
                     <?php
-                    }
+                    //}
                     }
                     ?>
                 </div>

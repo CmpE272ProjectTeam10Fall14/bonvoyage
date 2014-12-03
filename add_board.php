@@ -29,16 +29,19 @@ function checkPost(){
 		alert("Board cannot be empty!");
 		return false;
 	}
+
+    alert("Board added successfully!!");
 }
 </script>
 	
     <div id="wrapper">
-    	
-        <div id="header">
+    	<div id="header">
         	<?php include('header.php'); ?>
         </div>
-        
-        
+
+        <?php
+        error_reporting(0);
+        ?>
 <?php 
 	if(isset($_POST['submit'])&&$_POST['submit']){
 		$board_name = $_POST['board_name'];
@@ -46,11 +49,10 @@ function checkPost(){
 		$user_id = $_SESSION['user'][0];
 		$sql="insert into board (board_id,user_id,board_name,board_cat,create_time) values (NULL,'".$user_id."','".$board_name."','".$cat."',now())";
 		mysql_query($sql) or die("Add Board Error!!");
-		Header("Location:add.php");
+        $success = 1;
+        Header("Location:add.php");
 	}
 ?>
-
-
         <div id="main">
             <div id="content">
                 <div class="col-lg-2">
@@ -61,7 +63,7 @@ function checkPost(){
                     <div align="center">
                         <li>
                             <a href="add.php">
-                                <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add Pin</button>
+                                <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add pin to the story board</button>
                             </a>
                         </li>
                     </div>
@@ -71,7 +73,7 @@ function checkPost(){
                     <div align="center">
                         <li>
                             <a href="add_board.php">
-                                <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add Board</button>
+                                <button class="btn btn-primary btn-xs btn-block active" type="submit" name="submit" value="Login">Add story board</button>
                             </a>
                         </li>
                     </div>
@@ -94,13 +96,21 @@ function checkPost(){
                         <p><b>Board Category</b>
                            <select class="form-control input-xs"  name="cat" type="text" >
                                <option value="">--Select--</option>
-                               <option value="adventure">Adventure</option>
-                                <option value="backpacking">Back Packing</option>
-                                <option value="beachHoliday">Beach Holiday</option>
-                                <option value="city">City</option>
-                                <option value="culture">Culture</option>
-                                <option value="historical">Historical</option>
-                                <option value="religious">Religious</option>
+                               <option value="Arts">Arts</option>
+                               <option value="Backpacking">Backpacking</option>
+                               <option value="BeachHolidays">Beach Holidays</option>
+                               <option value="BudgetTravel">Budget Travel</option>
+                               <option value="CityTravels">City Travels</option>
+                               <option value="Culture">Culture</option>
+                               <option value="DayTrips">Day Trips</option>
+                               <option value="Education">Educational Trips</option>
+                               <option value="FamilyTrips">Family Trips</option>
+                               <option value="Getaways">Getaways</option>
+                               <option value="History">Historical Trips</option>
+                               <option value="Luxury">Luxury</option>
+                               <option value="Nature">Nature</option>
+                               <option value="Nightlife">Nightlife</option>
+                               <option value="Religious">Religious Trips</option>
                             </select>
                         </p>
                         <p>
